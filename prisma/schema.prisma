@@ -1,0 +1,22 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  name          String?
+  email         String   @unique
+  whatsappNum   String?  @unique   // WhatsApp number yahan save hoga
+  accessToken   String?            // Google Calendar ke liye
+  refreshToken  String?            // Google Calendar ke liye
+  createdAt     DateTime @default(now())
+}
