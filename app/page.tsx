@@ -32,7 +32,7 @@ export default function Home() {
           <>
             {/* THIS IS WHERE THE NAME CHANGED */}
             <h1 className="text-3xl font-extrabold mb-2 text-gray-800">
-              Raza ChatBot
+              Friendly ChatBot
             </h1>
             <p className="text-gray-600 mb-8 text-sm">
               Connect your WhatsApp to schedule calendar events easily.

@@ -12,11 +12,25 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(cuid())
-  name          String?
-  email         String   @unique
-  whatsappNum   String?  @unique   // WhatsApp number yahan save hoga
-  accessToken   String?            // Google Calendar ke liye
-  refreshToken  String?            // Google Calendar ke liye
-  createdAt     DateTime @default(now())
+  id           String    @id @default(cuid())
+  name         String?
+  email        String    @unique
+  whatsappNum  String?   @unique   // WhatsApp number yahan save hoga
+  accessToken  String?             // Google Calendar ke liye
+  refreshToken String?             // Google Calendar ke liye
+  createdAt    DateTime  @default(now())
+  
+  // Nayi line: User ke saare messages isse link honge
+  messages     Message[] 
+}
+
+// Naya Model: Chat history save karne ke liye
+model Message {
+  id        String   @id @default(cuid())
+  content   String
+  role      String   // Isme "user" ya "assistant" save hoga
+  createdAt DateTime @default(now())
+  
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
