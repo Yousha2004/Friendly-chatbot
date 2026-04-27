@@ -1,10 +1,11 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const authOptions = {
+// 👇 Yahan maine naam theek kar diya aur ': NextAuthOptions' laga diya hai
+export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -19,8 +20,14 @@ export const authOptions = {
       },
     }),
   ],
+  
+  // 👇 5 minute auto-logout ka timer
+  session: {
+    strategy: "jwt", 
+    maxAge: 5 * 60, // 5 * 60 = 300 seconds (5 minutes)
+  },
+
   callbacks: {
-    // Yahan humne ': any' laga diya taaki TypeScript pareshaan na kare
     async signIn({ user, account }: any) { 
       
       // Agar kisi wajah se user ki email nahi aayi, toh error se bachne ke liye pehle hi rok do
